@@ -1,9 +1,9 @@
-import { CardWithForm } from './components/CardWithForm';
+import MainHome from './components/MainHome';
 
 export default function Home() {
   return (
-    <div>
-      <CardWithForm />
+    <div className="w-[800px] h-[800px] flex justify-center">
+      <MainHome />
     </div>
   );
 }
