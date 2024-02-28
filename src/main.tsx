@@ -7,6 +7,7 @@ import ErrorPage from './errorPage';
 import Diary from './components/Diary.tsx';
 import DiaryList from './components/DiaryList.tsx';
 import Calendar from './components/Calendar.tsx';
+import GoogleCallback from './auth/GoogleCallback.tsx';
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,7 @@ const router = createBrowserRouter([
     path: '/diaryList',
     element: <DiaryList />,
   },
+  { path: '/api/auth/google/callback', element: <GoogleCallback /> },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

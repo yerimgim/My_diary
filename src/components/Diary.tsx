@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 // import {
 //   AlertDialog,
 //   AlertDialogAction,
@@ -50,12 +51,21 @@ const Diary = () => {
     navigate('/calendar');
   };
 
+  const [user, setUser] = useState<string>('');
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    if (!user) {
+      setUser(JSON.parse(localStorage.getItem('user')));
+    }
+  }, []);
+
   return (
     <section className="w-[800px] h-[800px] flex flex-col justify-between absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg overflow-hidden transform transition-all m-4 max-w-lg p-6 po">
       <section>
         <span className="block font-dohyeon text-[#999] mb-3">2024년 2월 xx일 맑음</span>
         <h3 className="font-jalnan">
-          유저, <br /> 오늘의 기분은 어떤가요?
+          {user.username}, <br /> 오늘의 기분은 어떤가요?
         </h3>
         <ScrollArea className="w-100 whitespace-nowrap rounded-md ">
           <div className="flex w-max space-x-4 py-3">
