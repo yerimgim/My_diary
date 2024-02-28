@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
+import { AiOutlineLeft } from 'react-icons/ai';
 
 export type DiaryListType = {
   id: string;
@@ -63,9 +64,11 @@ const DiaryList = () => {
   };
   return (
     <section>
-      <header>
-        <Button onClick={handlePage}> 캘린더로 돌아가기 </Button>
-        <h3 className="font-jalnan text-center">2024</h3>
+      <header className="flex items-center">
+        <Button onClick={handlePage} variant="ghost">
+          <AiOutlineLeft size={24} color="#000" />
+        </Button>
+        <h3 className="font-jalnan text-center">2024년 2월</h3>
       </header>
       <main className="w-[400px] mb-3">
         {diaryList.map((diary) => (

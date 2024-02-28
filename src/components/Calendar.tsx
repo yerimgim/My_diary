@@ -18,6 +18,9 @@ import './Calendar.css';
 import constants from '@/utils/contants';
 import { useNavigate } from 'react-router-dom';
 
+// import { DayPicker } from 'react-day-picker';
+import { Button } from './ui/button';
+
 const Calendar = () => {
   const [currentDate, setCurrentDate] = useState<Date>(new Date()); // 현재 달 (2024-01)
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -27,6 +30,7 @@ const Calendar = () => {
   const startDate = startOfWeek(monthStart);
   const endDate = endOfWeek(monthEnd);
   const week = constants.WEEK;
+  const today = new Date();
 
   const weeks = week.map((item, index) => {
     return (
@@ -44,6 +48,7 @@ const Calendar = () => {
   while (startDay <= endDate) {
     for (let i = 0; i < 7; i++) {
       formattedDate = format(startDay, 'd');
+      // console.log(formattedDate);
       days.push(
         <div className="day">
           <span
@@ -56,7 +61,7 @@ const Calendar = () => {
                   ? 'red'
                   : isSaturday(startDay)
                   ? 'blue'
-                  : '#000',
+                  : '#333',
             }}
           >
             {formattedDate}
@@ -85,6 +90,7 @@ const Calendar = () => {
   const navigate = useNavigate();
   const handleInfo = (): void => {
     // setIsOpen(!isOpen);
+
     navigate('/diary');
   };
 
@@ -97,22 +103,23 @@ const Calendar = () => {
     <>
       <section className="layout">
         <header className="header">
-          <button onClick={prevMonth} className="button">
+          <Button onClick={prevMonth} variant="ghost">
             <AiOutlineLeft size={24} color="#000" />
-          </button>
+          </Button>
           <div className="flex flex-col items-center">
             <h2 className="text-center font-jalnan">{format(currentDate, 'yyyy')}</h2>
 
             <h1 className="font-jalnan text-[25px]">{format(currentDate, 'M')}월</h1>
           </div>
-          <button onClick={nextMonth}>
+          <Button onClick={nextMonth} variant="ghost">
             <AiOutlineRight size={24} color="#000" />
-          </button>
+          </Button>
         </header>
         <div className="calendar-box">
           <div className="calendar-box">
-            <div className="week-layout">{weeks}</div>
-            <div className="day-layout" onClick={handleInfo}>
+            <div className="week-layout font-jalnan">{weeks}</div>
+            {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
+            <div className="day-layout font-jalnan" onClick={() => handleInfo(day)}>
               {day}
             </div>
           </div>
@@ -120,11 +127,10 @@ const Calendar = () => {
       </section>
       {/* {isOpen && (
         <Diary isOpen={isOpen} onClose={toggleModal} onSave={handleSave}>
-          {/* <DiaryDialog /> 
+          {/* <DiaryDialog />
         </Diary>
       )} */}
     </>
   );
 };
-
 export default Calendar;

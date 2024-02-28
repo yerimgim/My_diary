@@ -38,8 +38,8 @@ button {
   color: #8f8f8f;
   display: flex;
   justify-content: center;
-  border: 1px solid #ddd;
-  border-radius: 10px;
+  /* border: 1px solid #ddd; */
+  /* border-radius: 10px; */
   padding: 10px;
 }
 
@@ -54,7 +54,7 @@ button {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 1px solid #ddd;
+  /* border: 1px solid #ddd; */
 }
 .day-box {
   display: flex;
