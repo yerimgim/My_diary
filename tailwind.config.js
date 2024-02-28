@@ -18,6 +18,10 @@ export const theme = {
   extend: {
     fontFamily: {
       jalnan: ['yg-jalnan', 'sans-serif'],
+      dohyeon: ['BMDOHYEON', 'sans-serif'],
+    },
+    textUnderlineOffset: {
+      3: '3px',
     },
     colors: {
       border: 'hsl(var(--border))',

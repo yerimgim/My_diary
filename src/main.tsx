@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ErrorPage from './errorPage';
 import Diary from './components/Diary.tsx';
 import DiaryList from './components/DiaryList.tsx';
+import Calendar from './components/Calendar.tsx';
 
 const router = createBrowserRouter([
   {
@@ -22,11 +23,15 @@ const router = createBrowserRouter([
     element: <div>Hello world!</div>,
   },
   {
+    path: '/calendar',
+    element: <Calendar />,
+  },
+  {
     path: '/diary',
     element: <Diary />,
   },
   {
-    path: '/diarListy',
+    path: '/diaryList',
     element: <DiaryList />,
   },
 ]);

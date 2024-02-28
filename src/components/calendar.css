@@ -1,0 +1,75 @@
+.layout {
+  max-width: 1300px;
+  margin: 100px auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  font-size: 36px;
+  color: #000;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+}
+
+button {
+  margin: 0 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.calendar-box {
+  margin-top: 20px;
+}
+
+.week-layout {
+  display: flex;
+  justify-content: space-between;
+}
+
+.week {
+  width: 14%;
+  color: #8f8f8f;
+  display: flex;
+  justify-content: center;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.day-layout {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.day {
+  width: 14.28%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #ddd;
+}
+.day-box {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.day-span {
+  padding: 10px;
+  border-radius: 50%;
+  position: relative;
+  font-weight: 700;
+}
+
+.diary-button-box {
+  display: flex;
+  justify-content: space-between;
+}
