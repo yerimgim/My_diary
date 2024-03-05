@@ -8,14 +8,9 @@ import { format, getYear, getMonth, getDate } from 'date-fns';
 
 function Calendar() {
   const [selectedDay, setSelectedDay] = useState(null);
-  // const [diaries, setDiaries] = useState({}); // 날짜를 키로, 일기 제목을 값으로 하는 객체
-  // const [title, setTitle] = useState('');
-  // const [booked, setBooked] = useState(false);
-  // const [data, setData] = useState([]);
-
   useFetchDiaryData();
 
-  const { diaryLoading, diaryData } = useStore((state) => state);
+  const { diaryData } = useStore((state) => state);
   const [modifiers, setModifiers] = useState({});
   const [modifiersStyles, setModifiersStyles] = useState({});
 
@@ -86,7 +81,7 @@ function Calendar() {
               />
             </div>
           ) : (
-            <p className="text-center">날짜를 선택하여 일기를 작성하세요.!</p>
+            <p className="text-center font-jalnan">날짜를 선택하여 일기를 작성하세요.!</p>
           )
         }
       />
