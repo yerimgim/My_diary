@@ -95,3 +95,10 @@
     @apply bg-background text-foreground;
   }
 }
+
+.custom-day-picker #react-day-picker-2.rdp-caption_label {
+  background: linear-gradient(to top, #fff7c2 50%, transparent 10%);
+  z-index: 0 !important;
+  border: none;
+  font-family: yg-jalnan;
+}

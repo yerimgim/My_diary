@@ -123,6 +123,7 @@ const Diary = ({ isOpen, onClose, selectedDay, saveDiary }: DiaryProps) => {
       <section>
         <div className="mt-4 flex justify-center">
           <Button
+            className="mx-1"
             onClick={() => {
               saveDiary({
                 emotion: selectedEmotion,
@@ -137,7 +138,7 @@ const Diary = ({ isOpen, onClose, selectedDay, saveDiary }: DiaryProps) => {
           </Button>
           <Button
             onClick={onClose}
-            className="px-4 py-2 bg-gray-500 text-white text-base font-medium rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300"
+            className="px-4 py-2 mx-1 bg-gray-500 text-white text-base font-medium rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300"
           >
             닫기
           </Button>

@@ -4,7 +4,7 @@ import 'react-day-picker/dist/style.css';
 import useStore from '@/store/store';
 import useFetchDiaryData from '@/hooks/useFetchData';
 import Diary from '@/components/Diary';
-import { format, getYear, getMonth, getDay, getDate } from 'date-fns';
+import { format, getYear, getMonth, getDate } from 'date-fns';
 
 function Calendar() {
   const [selectedDay, setSelectedDay] = useState(null);
@@ -63,13 +63,18 @@ function Calendar() {
     useStore.getState().createData(newDiaryData);
   };
 
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const disabledDays = { after: today };
+
   return (
-    <div className="flex h-[800px] items-center">
+    <div className="flex h-[800px] items-center custom-day-picker">
       <DayPicker
         mode="single"
         modifiers={modifiers}
         modifiersStyles={modifiersStyles}
         onSelect={handleDayClick}
+        disabled={disabledDays}
         footer={
           selectedDay ? (
             <div>
@@ -81,7 +86,7 @@ function Calendar() {
               />
             </div>
           ) : (
-            <p>날짜를 선택하여 일기를 작성하세요.</p>
+            <p className="text-center">날짜를 선택하여 일기를 작성하세요.!</p>
           )
         }
       />
