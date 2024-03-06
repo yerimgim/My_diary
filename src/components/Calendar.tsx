@@ -5,6 +5,7 @@ import useStore from '@/store/store';
 import useFetchDiaryData from '@/hooks/useFetchData';
 import Diary from '@/components/Diary';
 import { format, getYear, getMonth, getDate } from 'date-fns';
+import DiaryList from './DiaryList';
 
 function Calendar() {
   const [selectedDay, setSelectedDay] = useState(null);
@@ -45,6 +46,8 @@ function Calendar() {
     const month = getMonth(formattedDate);
     const day = getDate(formattedDate);
 
+    console.log(formattedDate);
+
     const newDiaryData = {
       date: formattedDate,
       emotion,
@@ -62,6 +65,19 @@ function Calendar() {
   today.setHours(0, 0, 0, 0);
   const disabledDays = { after: today };
 
+  // console.log('selectedDay', selectedDay || '');
+  // const aa = format(selectedDay, 'yyyyMMdd') ?? '';
+  // console.log(aa);
+  //
+  const selectedDayDataExists = diaryData?.some(({ attributes }) => {
+    let formattedDate;
+    if (selectedDay) {
+      formattedDate = format(selectedDay, 'yyyyMd');
+    }
+    const date = `${attributes.year}${attributes.month + 1}${attributes.day}`;
+    return formattedDate === date;
+  });
+
   return (
     <div className="flex h-[800px] items-center custom-day-picker">
       <DayPicker
@@ -72,14 +88,16 @@ function Calendar() {
         disabled={disabledDays}
         footer={
           selectedDay ? (
-            <div>
+            selectedDayDataExists ? (
+              <DiaryList />
+            ) : (
               <Diary
                 isOpen={isOpen}
                 onClose={toggleModal}
                 selectedDay={selectedDay}
                 saveDiary={saveDiary}
               />
-            </div>
+            )
           ) : (
             <p className="text-center font-jalnan">날짜를 선택하여 일기를 작성하세요.!</p>
           )

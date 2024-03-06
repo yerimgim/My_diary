@@ -71,8 +71,6 @@ const Diary = ({ isOpen, onClose, selectedDay, saveDiary }: DiaryProps) => {
   return (
     <section className="w-[800px] h-[800px] flex flex-col justify-between absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg overflow-hidden transform transition-all m-4 max-w-lg p-6 po">
       <section>
-        {/* <span className="block font-dohyeon text-[#999] mb-3">2024년 2월 xx일 맑음</span> */}
-
         <h3
           className="font-jalnan inline-block "
           style={{

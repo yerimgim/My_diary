@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { AiOutlineLeft } from 'react-icons/ai';
 import useStore from '@/store/store';
 import useFetchDiaryData from '@/hooks/useFetchData';
+import { MdModeEdit, MdDelete } from 'react-icons/md';
 
 export type DiaryListType = {
   id: string;
@@ -28,30 +29,41 @@ const DiaryList = () => {
   const { diaryLoading, diaryData } = useStore((state) => state);
 
   return (
-    <section>
+    <section className="relative">
       <header className="flex items-center">
         <Button onClick={handlePage} variant="ghost">
           <AiOutlineLeft size={24} color="#000" />
         </Button>
         <h3 className="font-jalnan text-center">2024년 2월</h3>
       </header>
-      <main className="w-[400px] mb-3">
+      <main className="w-[400px] h-[800px] mb-3">
         {diaryLoading ? (
-          <>is loading .... </>
+          <>loading .... </>
         ) : (
           diaryData &&
           diaryData.length !== 0 &&
           diaryData.map((diary) => (
             <div
-              key={diary.attributes.id}
+              key={diary.id}
               className="min-w-full bg-slate-200 mb-3 h-[200px] p-4 rounded-lg"
               style={{
                 backgroundColor: diary.attributes.color,
               }}
             >
-              <h2 className="text-[35px]">{diary.attributes.emotion}</h2>
+              <div className="flex items-center justify-between">
+                <h2 className="text-[35px]">{diary.attributes.emotion}</h2>
+                <div>
+                  <Button variant="ghost" className="px-1">
+                    <MdModeEdit size={24} />
+                  </Button>
+                  <Button variant="ghost" className="px-1">
+                    <MdDelete size={24} />
+                  </Button>
+                </div>
+              </div>
+
               <div className="font-dohyeon">
-                {diary.attributes.year}년 {diary.attributes.month}월 {diary.attributes.day}일{' '}
+                {diary.attributes.year}년 {diary.attributes.month + 1}월 {diary.attributes.day}일{' '}
                 {diary.attributes.weather}
               </div>
               <div className="font-dohyeon text-[12px] mt-5">{diary.attributes.content}</div>

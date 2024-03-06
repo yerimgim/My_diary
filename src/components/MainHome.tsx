@@ -1,15 +1,7 @@
 import { Button } from '@/components/ui/button';
-import { useNavigate } from 'react-router-dom';
 import { FaGoogle } from 'react-icons/fa';
 
-import { HOST_API } from '../../config';
-
 const MainHome = () => {
-  const navigate = useNavigate();
-  const handleLogin = (): void => {
-    // console.log('13');
-    // navigate('/calendar');
-  };
   return (
     <section className="flex flex-col flex-wrap items-center justify-center">
       <img src="/mainImg.png" alt="메인 이미지" />
