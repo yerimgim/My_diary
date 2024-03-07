@@ -6,6 +6,7 @@ import useFetchDiaryData from '@/hooks/useFetchData';
 import Diary from '@/components/Diary';
 import { format, getYear, getMonth, getDate } from 'date-fns';
 import DiaryList from './DiaryList';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function Calendar() {
   const [selectedDay, setSelectedDay] = useState(null);
@@ -40,6 +41,8 @@ function Calendar() {
     if (!isOpen) setIsOpen(true);
   };
 
+  const { emotion } = useLocation();
+
   const saveDiary = ({ emotion = '', color = '', content = '' }) => {
     const formattedDate = format(selectedDay, 'yyyy-MM-dd');
     const year = getYear(formattedDate);
@@ -48,17 +51,17 @@ function Calendar() {
 
     console.log(formattedDate);
 
-    const newDiaryData = {
-      date: formattedDate,
-      emotion,
-      color,
-      content,
-      year,
-      month,
-      day,
-    };
+    // const newDiaryData = {
+    //   date: formattedDate,
+    //   emotion,
+    //   color,
+    //   content,
+    //   year,
+    //   month,
+    //   day,
+    // };
 
-    useStore.getState().createData(newDiaryData);
+    // useStore.getState().createData(newDiaryData);
   };
 
   const today = new Date();
@@ -78,6 +81,16 @@ function Calendar() {
     return formattedDate === date;
   });
 
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (selectedDay && selectedDayDataExists) {
+      navigate('/diaryList');
+    } else if (selectedDay && !selectedDayDataExists) {
+      navigate('/diary');
+    }
+  }, [selectedDay, selectedDayDataExists, navigate]);
+
   return (
     <div className="flex h-[800px] items-center custom-day-picker">
       <DayPicker
@@ -86,22 +99,22 @@ function Calendar() {
         modifiersStyles={modifiersStyles}
         onSelect={handleDayClick}
         disabled={disabledDays}
-        footer={
-          selectedDay ? (
-            selectedDayDataExists ? (
-              <DiaryList />
-            ) : (
-              <Diary
-                isOpen={isOpen}
-                onClose={toggleModal}
-                selectedDay={selectedDay}
-                saveDiary={saveDiary}
-              />
-            )
-          ) : (
-            <p className="text-center font-jalnan">날짜를 선택하여 일기를 작성하세요.!</p>
-          )
-        }
+        // footer={
+        //   selectedDay ? (
+        //     selectedDayDataExists ? (
+        //       <DiaryList />
+        //     ) : (
+        //       <Diary
+        //         isOpen={isOpen}
+        //         onClose={toggleModal}
+        //         selectedDay={selectedDay}
+        //         saveDiary={saveDiary}
+        //       />
+        //     )
+        //   ) : (
+        //     <p className="text-center font-jalnan">날짜를 선택하여 일기를 작성하세요.!</p>
+        //   )
+        // }
       />
     </div>
   );

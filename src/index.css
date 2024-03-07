@@ -106,6 +106,7 @@
 .custom-day-picker .rdp-day_today {
   font-weight: 400 !important;
   background-color: #e5e8ea78;
+  font-weight: 600;
 }
 
 .custom-day-picker .rdp-button.rdp-day {

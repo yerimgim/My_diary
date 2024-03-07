@@ -18,7 +18,7 @@ export const createDiarySlice = (set: DiaryState<SetState>, get) => ({
 
 		try {
 			const data = await fetchDiaryData();
-			console.log("data : )", data.data);
+			// console.log("data : )", data.data);
 			set({ diaryData: data.data, diaryLoading: false });
 		} catch (error) {
 			set({ diaryError: error.message, diaryLoading: false });
@@ -28,12 +28,17 @@ export const createDiarySlice = (set: DiaryState<SetState>, get) => ({
 		set({ diaryLoading: true });
 		try {
 			const createdData = await createDiaryData(newDiaryData);
-			console.log("createData", createdData.data);
-			console.log("createData", createdData.data);
 			set((state) => ({
 				diaryData: [...state.diaryData, createdData.data],
 				diaryLoading: false,
 			}));
+		} catch (error) {
+			set({ diaryError: error.message, diaryLoading: false });
+		}
+	},
+	updateData: async (diaryId, newDiaryData) => {
+		set({ diaryLoading: true });
+		try {
 		} catch (error) {
 			set({ diaryError: error.message, diaryLoading: false });
 		}
@@ -46,7 +51,6 @@ async function fetchDiaryData() {
 		const response = await axios.get(
 			`${import.meta.env.VITE_REST_API_KEY}/api/diary-lists`,
 		);
-		// console.log(response);
 		return response.data;
 	} catch (error) {
 		console.log(error);
@@ -68,5 +72,17 @@ async function createDiaryData(newDiaryData) {
 		return response.data;
 	} catch (error) {
 		console.error("Create diary data failed:", error);
+	}
+}
+
+async function updateDiaryData(diaryId, newDiaryData) {
+	try {
+		// const response = await axios.put(
+		// 	`${import.meta.env.VITE_REST_API_KEY}/api/diary-lists`,
+		// 	{data: id, }
+		// )
+		// return response.data;
+	} catch (error) {
+		console.error("Failed..", error);
 	}
 }

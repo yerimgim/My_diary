@@ -29,12 +29,12 @@ export const emotionList: EmotionTypeList[] = [
 ];
 
 const Diary = ({ isOpen, onClose, selectedDay, saveDiary }: DiaryProps) => {
-  // if (!isOpen) return null;
+  if (!isOpen) return null;
   const navigate = useNavigate();
-  // const handleSave = (): void => {
-  //   console.log('save button');
-  //   navigate('/calendar', { });
-  // };
+  const handleSave = (): void => {
+    console.log('save button');
+    navigate('/calendar');
+  };
   const handleClose = (): void => {
     console.log('close button');
     navigate('/calendar');
@@ -113,7 +113,7 @@ const Diary = ({ isOpen, onClose, selectedDay, saveDiary }: DiaryProps) => {
           <Button
             className="mx-1"
             onClick={() => {
-              navigate('/calendar', {
+              saveDiary({
                 emotion: selectedEmotion,
                 color: selectedColor,
                 content: diaryContent,
@@ -125,7 +125,7 @@ const Diary = ({ isOpen, onClose, selectedDay, saveDiary }: DiaryProps) => {
             등록
           </Button>
           <Button
-            onClick={handleClose}
+            onClick={onClose}
             className="px-4 py-2 mx-1 bg-gray-500 text-white text-base font-medium rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300"
           >
             닫기

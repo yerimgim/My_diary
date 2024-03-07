@@ -13,7 +13,7 @@ export const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
-    errorElement: <ErrorPage />,
+    errorElement: <ErrorPage textContent="" />,
   },
   {
     path: '/mainHome',
@@ -55,7 +55,7 @@ export const router = createBrowserRouter([
     path: '*',
     element: (
       <Suspense fallback="...">
-        <ErrorPage />
+        <ErrorPage textContent="잘못된 접근입니다." />
       </Suspense>
     ),
   },
