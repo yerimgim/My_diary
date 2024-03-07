@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useStore from '@/store/store';
 
 interface DiaryProps {
@@ -35,7 +35,6 @@ const Diary = () => {
   const { state } = useLocation();
 
   const handleClose = (): void => {
-    console.log('close button');
     navigate('/calendar');
   };
 
@@ -51,31 +50,30 @@ const Diary = () => {
   const [selectedEmotion, setSelectedEmotion] = useState('');
   const [selectedColor, setSelectedColor] = useState('');
 
-  const [diaryContent, setDiaryContent] = useState('');
+  const [diaryContent, setDiaryContent] = useState(state.isEdit ? state.diary.content : '');
+  console.log(state);
 
-  const onChangeContent = (e) => {
-    setDiaryContent(e.target.value);
+  const onChangeContent = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setDiaryContent(event.target.value);
   };
 
   const saveDiary = (emotion, color, content) => {
     const newDiaryData = {
       date: state.formattedDate,
-      emotion,
-      color,
+      emotion: state.diary.emtion || emotion,
+      color: state.diary.color || color,
       content,
       year: state.year,
       month: state.month,
       day: state.date,
     };
 
-    // console.log(newDiaryData);
     if (state.isEdit) {
-      useStore.getState().updateData(newDiaryData);
+      useStore.getState().updateData(state.diaryid, newDiaryData);
     } else {
       useStore.getState().createData(newDiaryData);
     }
 
-    // useStore.getState().createData(newDiaryData);
     navigate('/calendar');
   };
 
@@ -125,6 +123,7 @@ const Diary = () => {
           <Textarea
             placeholder="Type your message here."
             className="my-3 h-[400px]"
+            value={diaryContent}
             onChange={onChangeContent}
           />
         </div>

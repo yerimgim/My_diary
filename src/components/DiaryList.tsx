@@ -1,10 +1,11 @@
 import { Button } from '@/components/ui/button';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { AiOutlineLeft } from 'react-icons/ai';
 import useStore from '@/store/store';
 import useFetchDiaryData from '@/hooks/useFetchData';
 import { MdModeEdit, MdDelete } from 'react-icons/md';
 import HeaderLayout from './HeaderLayout';
+import { useEffect, useState } from 'react';
 
 export type DiaryListType = {
   id: string;
@@ -18,10 +19,8 @@ export type DiaryListType = {
   color: string;
   weather: string;
 };
-
-// 수정버튼, 삭제버튼 추가
-
 const DiaryList = () => {
+  const { state } = useLocation();
   const navigate = useNavigate();
   const handlePage = () => {
     navigate('/calendar');
@@ -29,13 +28,25 @@ const DiaryList = () => {
   useFetchDiaryData();
   const { diaryLoading, diaryData } = useStore((state) => state);
   const handleEditDiary = (diaryid, diary) => {
-    console.log(diaryid, diary);
     navigate('/diary', { state: { diaryid, diary, isEdit: true } });
   };
 
   const handleSelectedDiary = (diaryId: number) => {
     useStore.getState().deleteData(diaryId);
   };
+
+  const [filteredData, setFilteredData] = useState([]);
+
+  // diaryData가 변경될 때마다 특정 연도와 월에 해당하는 데이터를 필터링합니다.
+  useEffect(() => {
+    const filtered = diaryData
+      .filter(
+        (diary) => diary.attributes.year === state.year && diary.attributes.month === state.month,
+      )
+      .sort((a, b) => b.attributes.day - a.attributes.day);
+
+    setFilteredData(filtered);
+  }, [diaryData, state.year, state.month]);
 
   return (
     <section className="relative">
@@ -44,7 +55,9 @@ const DiaryList = () => {
           <Button onClick={handlePage} variant="ghost">
             <AiOutlineLeft size={24} color="#000" />
           </Button>
-          <h3 className="font-jalnan text-center">2024년 2월</h3>
+          <h3 className="font-jalnan text-center">
+            {state.year}년 {state.month + 1}월
+          </h3>
         </header>
       </HeaderLayout>
 
@@ -52,9 +65,9 @@ const DiaryList = () => {
         {diaryLoading ? (
           <>loading .... </>
         ) : (
-          diaryData &&
-          diaryData.length !== 0 &&
-          diaryData.map((diary) => (
+          filteredData &&
+          filteredData.length !== 0 &&
+          filteredData.map((diary) => (
             <div
               key={diary.id}
               className="min-w-full bg-slate-200 mb-3 h-[200px] p-4 rounded-lg"
@@ -65,13 +78,13 @@ const DiaryList = () => {
               <div className="flex items-center justify-between">
                 <h2 className="text-[35px]">{diary.attributes.emotion}</h2>
                 <div>
-                  <Button variant="ghost" className="px-1">
+                  <Button variant="link" className="px-1">
                     <MdModeEdit
                       size={24}
                       onClick={() => handleEditDiary(diary.id, diary.attributes)}
                     />
                   </Button>
-                  <Button variant="ghost" className="px-1">
+                  <Button variant="link" className="px-1">
                     <MdDelete size={24} onClick={() => handleSelectedDiary(diary.id)} />
                   </Button>
                 </div>

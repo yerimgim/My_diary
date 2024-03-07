@@ -63,7 +63,7 @@ function Calendar() {
 
   useEffect(() => {
     if (selectedDay && selectedDayDataExists) {
-      navigate('/diaryList');
+      navigate('/diaryList', { state: { year, month } });
     } else if (selectedDay && !selectedDayDataExists) {
       navigate('/diary', { state: { formattedDate, year, month, date, day } });
     }
