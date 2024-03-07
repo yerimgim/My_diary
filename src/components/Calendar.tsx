@@ -79,22 +79,6 @@ function Calendar() {
           modifiersStyles={modifiersStyles}
           onSelect={handleDayClick}
           disabled={disabledDays}
-          // footer={
-          //   selectedDay ? (
-          //     selectedDayDataExists ? (
-          //       <DiaryList />
-          //     ) : (
-          //       <Diary
-          //         isOpen={isOpen}
-          //         onClose={toggleModal}
-          //         selectedDay={selectedDay}
-          //         saveDiary={saveDiary}
-          //       />
-          //     )
-          //   ) : (
-          //     <p className="text-center font-jalnan">날짜를 선택하여 일기를 작성하세요.!</p>
-          //   )
-          // }
         />
       </div>
     </>

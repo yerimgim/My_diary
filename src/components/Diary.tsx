@@ -25,13 +25,14 @@ export const emotionList: EmotionTypeList[] = [
   { id: '6', emotion: '🤯', color: '#CCB3F5' },
   { id: '7', emotion: '🤬', color: '#F99A8D' },
   { id: '8', emotion: '😵‍💫', color: '#A0B3F5' },
+  { id: '9', emotion: '🥸', color: '#FBD164' },
+  { id: '10', emotion: '🤒', color: '#F98DC1' },
+  { id: '11', emotion: '😴', color: '#D2E3A2' },
 ];
 
 const Diary = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
-
-  console.log(state);
 
   const handleClose = (): void => {
     console.log('close button');
