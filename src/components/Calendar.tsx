@@ -3,10 +3,8 @@ import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
 import useStore from '@/store/store';
 import useFetchDiaryData from '@/hooks/useFetchData';
-import Diary from '@/components/Diary';
-import { format, getYear, getMonth, getDate } from 'date-fns';
-import DiaryList from './DiaryList';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { format, getYear, getMonth, getDate, getDay } from 'date-fns';
+import { useNavigate } from 'react-router-dom';
 
 function Calendar() {
   const [selectedDay, setSelectedDay] = useState(null);
@@ -34,43 +32,17 @@ function Calendar() {
   }, [diaryData]);
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const toggleModal = () => setIsOpen(!isOpen);
+  // const toggleModal = () => setIsOpen(!isOpen);
 
   const handleDayClick = (day) => {
     setSelectedDay(day);
     if (!isOpen) setIsOpen(true);
   };
 
-  const { emotion } = useLocation();
-
-  const saveDiary = ({ emotion = '', color = '', content = '' }) => {
-    const formattedDate = format(selectedDay, 'yyyy-MM-dd');
-    const year = getYear(formattedDate);
-    const month = getMonth(formattedDate);
-    const day = getDate(formattedDate);
-
-    console.log(formattedDate);
-
-    // const newDiaryData = {
-    //   date: formattedDate,
-    //   emotion,
-    //   color,
-    //   content,
-    //   year,
-    //   month,
-    //   day,
-    // };
-
-    // useStore.getState().createData(newDiaryData);
-  };
-
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const disabledDays = { after: today };
 
-  // console.log('selectedDay', selectedDay || '');
-  // const aa = format(selectedDay, 'yyyyMMdd') ?? '';
-  // console.log(aa);
   //
   const selectedDayDataExists = diaryData?.some(({ attributes }) => {
     let formattedDate;
@@ -82,12 +54,17 @@ function Calendar() {
   });
 
   const navigate = useNavigate();
+  const formattedDate = selectedDay ? format(selectedDay, 'yyyy-MM-dd') : '';
+  const year = getYear(formattedDate);
+  const month = getMonth(formattedDate);
+  const date = getDate(formattedDate); // 12일
+  const day = getDay(formattedDate); //   수요일
 
   useEffect(() => {
     if (selectedDay && selectedDayDataExists) {
       navigate('/diaryList');
     } else if (selectedDay && !selectedDayDataExists) {
-      navigate('/diary');
+      navigate('/diary', { state: { formattedDate, year, month, date, day } });
     }
   }, [selectedDay, selectedDayDataExists, navigate]);
 

@@ -78,7 +78,7 @@ async function createDiaryData(newDiaryData) {
 async function updateDiaryData(diaryId, newDiaryData) {
 	try {
 		// const response = await axios.put(
-		// 	`${import.meta.env.VITE_REST_API_KEY}/api/diary-lists`,
+		// 	`${import.meta.env.VITE_REST_API_KEY}/api/diary-lists/:${diaryId}`,
 		// 	{data: id, }
 		// )
 		// return response.data;
@@ -86,3 +86,14 @@ async function updateDiaryData(diaryId, newDiaryData) {
 		console.error("Failed..", error);
 	}
 }
+
+// async function deleteDiaryData(diaryId) {
+// 	try {
+// 		const response = await axios.delete(
+// 			`${import.meta.env.VITE_REST_API_KEY}/api/diary-lists/:${diaryId}`
+// 		)
+// 		return response.data;
+// 	}catch (error) {
+// 		console.error("Failed..", error);
+// 	}
+// }

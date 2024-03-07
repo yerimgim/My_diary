@@ -1,14 +1,13 @@
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import useStore from '@/store/store';
 
 interface DiaryProps {
   isOpen?: any;
   onClose?: any;
-  selectedDay?: any;
-  saveDiary?: any;
 }
 
 export interface EmotionTypeList {
@@ -28,7 +27,7 @@ export const emotionList: EmotionTypeList[] = [
   { id: '8', emotion: '😵‍💫', color: '#A0B3F5' },
 ];
 
-const Diary = ({ isOpen, onClose, selectedDay, saveDiary }: DiaryProps) => {
+const Diary = ({ isOpen, onClose }: DiaryProps) => {
   // if (!isOpen) return null;
   const navigate = useNavigate();
   // const handleSave = (): void => {
@@ -56,6 +55,27 @@ const Diary = ({ isOpen, onClose, selectedDay, saveDiary }: DiaryProps) => {
 
   const onChangeContent = (e) => {
     setDiaryContent(e.target.value);
+  };
+
+  const { state } = useLocation();
+
+  console.log(state);
+
+  const saveDiary = (emotion, color, content) => {
+    const newDiaryData = {
+      date: state.formattedDate,
+      emotion,
+      color,
+      content,
+      year: state.year,
+      month: state.month,
+      day: state.date,
+    };
+
+    console.log(newDiaryData);
+
+    useStore.getState().createData(newDiaryData);
+    navigate('/calendar');
   };
 
   return (
@@ -113,13 +133,7 @@ const Diary = ({ isOpen, onClose, selectedDay, saveDiary }: DiaryProps) => {
           <Button
             className="mx-1"
             onClick={() => {
-              navigate('/calendar', {
-                emotion: selectedEmotion,
-                color: selectedColor,
-                content: diaryContent,
-              });
-
-              onClose(isOpen);
+              saveDiary(selectedEmotion, selectedColor, diaryContent);
             }}
           >
             등록
