@@ -12,6 +12,7 @@ function Calendar() {
   useFetchDiaryData();
 
   const { diaryData } = useStore((state) => state);
+
   const [modifiers, setModifiers] = useState({});
   const [modifiersStyles, setModifiersStyles] = useState({});
 
@@ -20,6 +21,7 @@ function Calendar() {
     const newModifiersStyles = {};
 
     diaryData?.forEach((diary) => {
+      console.log(diary);
       const { year, month, day, color } = diary.attributes;
       const dateKey = `day-${year}-${month}-${day}`;
       const date = new Date(year, month, day);

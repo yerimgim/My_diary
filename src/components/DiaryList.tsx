@@ -8,7 +8,6 @@ import HeaderLayout from './HeaderLayout';
 import { useEffect, useState } from 'react';
 
 export type DiaryListType = {
-  id: string;
   content: string;
   emotion: string;
   date: string;
@@ -19,6 +18,7 @@ export type DiaryListType = {
   color: string;
   weather: string;
 };
+
 const DiaryList = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
@@ -44,6 +44,8 @@ const DiaryList = () => {
         (diary) => diary.attributes.year === state.year && diary.attributes.month === state.month,
       )
       .sort((a, b) => b.attributes.day - a.attributes.day);
+
+    console.log(filtered);
 
     setFilteredData(filtered);
   }, [diaryData, state.year, state.month]);
