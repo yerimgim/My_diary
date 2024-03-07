@@ -4,6 +4,7 @@ import { AiOutlineLeft } from 'react-icons/ai';
 import useStore from '@/store/store';
 import useFetchDiaryData from '@/hooks/useFetchData';
 import { MdModeEdit, MdDelete } from 'react-icons/md';
+import HeaderLayout from './HeaderLayout';
 
 export type DiaryListType = {
   id: string;
@@ -27,15 +28,26 @@ const DiaryList = () => {
   };
   useFetchDiaryData();
   const { diaryLoading, diaryData } = useStore((state) => state);
+  const handleEditDiary = (diaryid, diary) => {
+    console.log(diaryid, diary);
+    navigate('/diary', { state: { diaryid, diary, isEdit: true } });
+  };
+
+  const handleSelectedDiary = (diaryId: number) => {
+    useStore.getState().deleteData(diaryId);
+  };
 
   return (
     <section className="relative">
-      <header className="flex items-center">
-        <Button onClick={handlePage} variant="ghost">
-          <AiOutlineLeft size={24} color="#000" />
-        </Button>
-        <h3 className="font-jalnan text-center">2024년 2월</h3>
-      </header>
+      <HeaderLayout>
+        <header className="flex items-center">
+          <Button onClick={handlePage} variant="ghost">
+            <AiOutlineLeft size={24} color="#000" />
+          </Button>
+          <h3 className="font-jalnan text-center">2024년 2월</h3>
+        </header>
+      </HeaderLayout>
+
       <main className="w-[400px] h-[800px] mb-3">
         {diaryLoading ? (
           <>loading .... </>
@@ -54,10 +66,13 @@ const DiaryList = () => {
                 <h2 className="text-[35px]">{diary.attributes.emotion}</h2>
                 <div>
                   <Button variant="ghost" className="px-1">
-                    <MdModeEdit size={24} />
+                    <MdModeEdit
+                      size={24}
+                      onClick={() => handleEditDiary(diary.id, diary.attributes)}
+                    />
                   </Button>
                   <Button variant="ghost" className="px-1">
-                    <MdDelete size={24} />
+                    <MdDelete size={24} onClick={() => handleSelectedDiary(diary.id)} />
                   </Button>
                 </div>
               </div>

@@ -7,6 +7,7 @@ interface DiaryState {
 	diaryError: string | null;
 	fetchData: () => Promise<void>;
 	createData: () => Promise<void>;
+	deleteData: () => Promise<void>;
 }
 
 export const createDiarySlice = (set: DiaryState<SetState>, get) => ({
@@ -39,6 +40,19 @@ export const createDiarySlice = (set: DiaryState<SetState>, get) => ({
 	updateData: async (diaryId, newDiaryData) => {
 		set({ diaryLoading: true });
 		try {
+		} catch (error) {
+			set({ diaryError: error.message, diaryLoading: false });
+		}
+	},
+	deleteData: async (diaryId) => {
+		set({ diaryLoading: true });
+		try {
+			await deleteDiaryData(diaryId);
+
+			set((state) => ({
+				diaryData: state.diaryData.filter((diary) => diary.id !== diaryId),
+				diaryLoading: false,
+			}));
 		} catch (error) {
 			set({ diaryError: error.message, diaryLoading: false });
 		}
@@ -87,13 +101,14 @@ async function updateDiaryData(diaryId, newDiaryData) {
 	}
 }
 
-// async function deleteDiaryData(diaryId) {
-// 	try {
-// 		const response = await axios.delete(
-// 			`${import.meta.env.VITE_REST_API_KEY}/api/diary-lists/:${diaryId}`
-// 		)
-// 		return response.data;
-// 	}catch (error) {
-// 		console.error("Failed..", error);
-// 	}
-// }
+async function deleteDiaryData(diaryId) {
+	try {
+		const response = await axios.delete(
+			`${import.meta.env.VITE_REST_API_KEY}/api/diary-lists/${diaryId}`,
+		);
+		console.log("response", response);
+		return response.data;
+	} catch (error) {
+		console.error("Failed..", error);
+	}
+}

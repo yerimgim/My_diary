@@ -27,13 +27,12 @@ export const emotionList: EmotionTypeList[] = [
   { id: '8', emotion: '😵‍💫', color: '#A0B3F5' },
 ];
 
-const Diary = ({ isOpen, onClose }: DiaryProps) => {
-  // if (!isOpen) return null;
+const Diary = () => {
   const navigate = useNavigate();
-  // const handleSave = (): void => {
-  //   console.log('save button');
-  //   navigate('/calendar', { });
-  // };
+  const { state } = useLocation();
+
+  console.log(state);
+
   const handleClose = (): void => {
     console.log('close button');
     navigate('/calendar');
@@ -57,10 +56,6 @@ const Diary = ({ isOpen, onClose }: DiaryProps) => {
     setDiaryContent(e.target.value);
   };
 
-  const { state } = useLocation();
-
-  console.log(state);
-
   const saveDiary = (emotion, color, content) => {
     const newDiaryData = {
       date: state.formattedDate,
@@ -72,9 +67,14 @@ const Diary = ({ isOpen, onClose }: DiaryProps) => {
       day: state.date,
     };
 
-    console.log(newDiaryData);
+    // console.log(newDiaryData);
+    if (state.isEdit) {
+      useStore.getState().updateData(newDiaryData);
+    } else {
+      useStore.getState().createData(newDiaryData);
+    }
 
-    useStore.getState().createData(newDiaryData);
+    // useStore.getState().createData(newDiaryData);
     navigate('/calendar');
   };
 

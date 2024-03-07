@@ -5,6 +5,7 @@ import useStore from '@/store/store';
 import useFetchDiaryData from '@/hooks/useFetchData';
 import { format, getYear, getMonth, getDate, getDay } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
+import HeaderLayout from '@/components/HeaderLayout';
 
 function Calendar() {
   const [selectedDay, setSelectedDay] = useState(null);
@@ -69,31 +70,34 @@ function Calendar() {
   }, [selectedDay, selectedDayDataExists, navigate]);
 
   return (
-    <div className="flex h-[800px] items-center custom-day-picker">
-      <DayPicker
-        mode="single"
-        modifiers={modifiers}
-        modifiersStyles={modifiersStyles}
-        onSelect={handleDayClick}
-        disabled={disabledDays}
-        // footer={
-        //   selectedDay ? (
-        //     selectedDayDataExists ? (
-        //       <DiaryList />
-        //     ) : (
-        //       <Diary
-        //         isOpen={isOpen}
-        //         onClose={toggleModal}
-        //         selectedDay={selectedDay}
-        //         saveDiary={saveDiary}
-        //       />
-        //     )
-        //   ) : (
-        //     <p className="text-center font-jalnan">날짜를 선택하여 일기를 작성하세요.!</p>
-        //   )
-        // }
-      />
-    </div>
+    <>
+      <HeaderLayout />
+      <div className="flex h-[800px] items-center custom-day-picker">
+        <DayPicker
+          mode="single"
+          modifiers={modifiers}
+          modifiersStyles={modifiersStyles}
+          onSelect={handleDayClick}
+          disabled={disabledDays}
+          // footer={
+          //   selectedDay ? (
+          //     selectedDayDataExists ? (
+          //       <DiaryList />
+          //     ) : (
+          //       <Diary
+          //         isOpen={isOpen}
+          //         onClose={toggleModal}
+          //         selectedDay={selectedDay}
+          //         saveDiary={saveDiary}
+          //       />
+          //     )
+          //   ) : (
+          //     <p className="text-center font-jalnan">날짜를 선택하여 일기를 작성하세요.!</p>
+          //   )
+          // }
+        />
+      </div>
+    </>
   );
 }
 
