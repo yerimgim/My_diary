@@ -5,10 +5,10 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 interface DiaryProps {
-  isOpen?: any;
-  onClose?: any;
-  selectedDay?: any;
-  saveDiary?: any;
+  isOpen?: boolean;
+  onClose?: boolean;
+  selectedDay?: string;
+  saveDiary?: (diary: DiaryDataType) => void;
 }
 
 export interface EmotionTypeList {
@@ -28,19 +28,19 @@ export const emotionList: EmotionTypeList[] = [
   { id: '8', emotion: '😵‍💫', color: '#A0B3F5' },
 ];
 
-const Diary = ({ isOpen, onClose, selectedDay, saveDiary }: DiaryProps) => {
+const Diary = ({ isOpen, onClose,  saveDiary }: DiaryProps) => {
   if (!isOpen) return null;
-  const navigate = useNavigate();
-  const handleSave = (): void => {
-    console.log('save button');
-    navigate('/calendar');
-  };
-  const handleClose = (): void => {
-    console.log('close button');
-    navigate('/calendar');
-  };
+  // const navigate = useNavigate();
+  // const handleSave = (): void => {
+  //   console.log('save button');
+  //   navigate('/calendar');
+  // };
+  // const handleClose = (): void => {
+  //   console.log('close button');
+  //   navigate('/calendar');
+  // };
 
-  const [user, setUser] = useState<string>('');
+  const [user, setUser] = useState({});
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
@@ -54,7 +54,7 @@ const Diary = ({ isOpen, onClose, selectedDay, saveDiary }: DiaryProps) => {
 
   const [diaryContent, setDiaryContent] = useState('');
 
-  const onChangeContent = (e) => {
+  const onChangeContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setDiaryContent(e.target.value);
   };
 

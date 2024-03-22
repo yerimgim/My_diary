@@ -7,8 +7,21 @@ import { format, getYear, getMonth, getDate, getDay } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 import HeaderLayout from '@/components/HeaderLayout';
 
+type DiaryDataType = {
+  color: string;
+  content: string;
+  createdAt: Date;
+  day: number;
+  emotion: string;
+  date: Date;
+  year: number;
+  month: number;
+  weather?: string;
+  updatedAt: Date;
+  pubulishedAt: Date;
+};
 function Calendar() {
-  const [selectedDay, setSelectedDay] = useState(null);
+  const [selectedDay, setSelectedDay] = useState<Date>();
   useFetchDiaryData();
 
   const { diaryData } = useStore((state) => state);
@@ -17,11 +30,11 @@ function Calendar() {
   const [modifiersStyles, setModifiersStyles] = useState({});
 
   useEffect(() => {
-    const newModifiers = {};
-    const newModifiersStyles = {};
+    const newModifiers: { [key: string]: Date } = {};
+    const newModifiersStyles: { [key: string]: React.CSSProperties } = {};
 
-    diaryData?.forEach((diary) => {
-      console.log(diary);
+    // biome-ignore lint/complexity/noForEach: <explanation>
+    diaryData?.forEach((diary: { attributes: DiaryDataType }) => {
       const { year, month, day, color } = diary.attributes;
       const dateKey = `day-${year}-${month}-${day}`;
       const date = new Date(year, month, day);
@@ -35,9 +48,8 @@ function Calendar() {
   }, [diaryData]);
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  // const toggleModal = () => setIsOpen(!isOpen);
 
-  const handleDayClick = (day) => {
+  const handleDayClick = (day: Date | undefined): void => {
     setSelectedDay(day);
     if (!isOpen) setIsOpen(true);
   };
@@ -46,9 +58,8 @@ function Calendar() {
   today.setHours(0, 0, 0, 0);
   const disabledDays = { after: today };
 
-  //
-  const selectedDayDataExists = diaryData?.some(({ attributes }) => {
-    let formattedDate;
+  const selectedDayDataExists = diaryData?.some(({ attributes }: { attributes: DiaryDataType }) => {
+    let formattedDate: string | undefined;
     if (selectedDay) {
       formattedDate = format(selectedDay, 'yyyyMd');
     }
@@ -69,7 +80,7 @@ function Calendar() {
     } else if (selectedDay && !selectedDayDataExists) {
       navigate('/diary', { state: { formattedDate, year, month, date, day } });
     }
-  }, [selectedDay, selectedDayDataExists, navigate]);
+  }, [selectedDay, selectedDayDataExists, navigate, year, month, formattedDate, date, day]);
 
   return (
     <>

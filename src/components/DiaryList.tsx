@@ -19,6 +19,11 @@ export type DiaryListType = {
   weather: string;
 };
 
+type DeleteDiaryType = {
+  updateData: (diaryId: string) => void;
+  deleteData: (diaryId: number) => void; // Add the deleteData property
+};
+
 const DiaryList = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
@@ -26,13 +31,10 @@ const DiaryList = () => {
     navigate('/calendar');
   };
   useFetchDiaryData();
-  const { diaryLoading, diaryData } = useStore((state) => state);
-  const handleEditDiary = (diaryid, diary) => {
-    navigate('/diary', { state: { diaryid, diary, isEdit: true } });
-  };
+  const { diaryLoading: boolean, diaryData } = useStore((state) => state);
 
   const handleSelectedDiary = (diaryId: number) => {
-    useStore.getState().deleteData(diaryId);
+    (useStore.getState() as DeleteDiaryType).deleteData(diaryId);
   };
 
   const [filteredData, setFilteredData] = useState([]);

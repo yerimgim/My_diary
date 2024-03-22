@@ -1,20 +1,30 @@
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import React, { useEffect, useState } from 'react';
 import useStore from '@/store/store';
 
-interface DiaryProps {
-  isOpen?: any;
-  onClose?: any;
-}
-
-export interface EmotionTypeList {
+type EmotionTypeList = {
   id: string;
   emotion: string;
   color: string;
-}
+};
+
+type DiaryDataType = {
+  date: Date;
+  emotion: string;
+  color: string;
+  content: string;
+  year: number;
+  month: number;
+  day: number;
+};
+
+type DiaryType = {
+  updateData: (diaryId: string, newData: DiaryDataType) => void;
+  createData: (newData: DiaryDataType) => void;
+};
 
 export const emotionList: EmotionTypeList[] = [
   { id: '1', emotion: '😀', color: '#F9E98D' },
@@ -30,6 +40,18 @@ export const emotionList: EmotionTypeList[] = [
   { id: '11', emotion: '😴', color: '#D2E3A2' },
 ];
 
+type UserInfo = {
+  avartar?: string | undefined;
+  id: number;
+  username: string;
+  blocked?: boolean;
+  confirmed?: boolean;
+  createdAt?: Date;
+  displayName?: string;
+  email: string;
+  provider?: string;
+  updatedAt: Date;
+};
 const Diary = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
@@ -38,30 +60,30 @@ const Diary = () => {
     navigate('/calendar');
   };
 
-  const [user, setUser] = useState<string>('');
+  const [user, setUser] = useState<UserInfo>();
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (!user) {
-      setUser(JSON.parse(localStorage.getItem('user')));
+      const parsedUserInfo = JSON.parse(localStorage.getItem('user') as string);
+      setUser(parsedUserInfo);
     }
-  }, []);
+  }, [user]);
 
   const [selectedEmotion, setSelectedEmotion] = useState('');
   const [selectedColor, setSelectedColor] = useState('');
 
   const [diaryContent, setDiaryContent] = useState(state.isEdit ? state.diary.content : '');
-  console.log(state);
+  // console.log(state);
 
-  const onChangeContent = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeContent = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setDiaryContent(event.target.value);
   };
 
-  const saveDiary = (emotion, color, content) => {
+  const saveDiary = (emotion: string, color: string, content: string) => {
     const newDiaryData = {
       date: state.formattedDate,
-      emotion: state.diary.emtion || emotion,
-      color: state.diary.color || color,
+      emotion: emotion || state.diary.emotion,
+      color: color || state.diary.color,
       content,
       year: state.year,
       month: state.month,
@@ -69,9 +91,9 @@ const Diary = () => {
     };
 
     if (state.isEdit) {
-      useStore.getState().updateData(state.diaryid, newDiaryData);
+      (useStore.getState() as DiaryType).updateData(state.diaryid, newDiaryData);
     } else {
-      useStore.getState().createData(newDiaryData);
+      (useStore.getState() as DiaryType).createData(newDiaryData);
     }
 
     navigate('/calendar');
@@ -92,6 +114,7 @@ const Diary = () => {
           <div className="flex w-max space-x-4 py-3">
             {emotionList.map((emotion) => (
               <div key={emotion.id}>
+                {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
                 <div
                   className="w-[55px] h-[55px] text-[38px] text-center rounded-md focus:ring focus:ring-violet-300 "
                   style={{

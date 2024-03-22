@@ -26,7 +26,7 @@ export const createDiarySlice = (set: DiaryState<SetState>, get) => ({
 			set({ diaryError: error.message, diaryLoading: false });
 		}
 	},
-	createData: async (newDiaryData: any) => {
+	createData: async (newDiaryData) => {
 		set({ diaryLoading: true });
 		try {
 			const createdData = await createDiaryData(newDiaryData);

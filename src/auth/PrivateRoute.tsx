@@ -1,6 +1,11 @@
+import React from 'react';
 import { Navigate } from 'react-router-dom';
 
-const PrivateRoute = ({ children, fallback }) => {
+type PrivateRoute = {
+  children: React.ReactNode;
+};
+
+const PrivateRoute = ({ children }: PrivateRoute) => {
   const auth = localStorage.getItem('user');
 
   return auth ? children : <Navigate to={'/'} />;
