@@ -83,9 +83,9 @@ function Calendar() {
   }, [selectedDay, selectedDayDataExists, navigate, year, month, formattedDate, date, day]);
 
   return (
-    <>
+    <div className="bg-slate-100">
       <HeaderLayout />
-      <div className="flex h-[800px] items-center custom-day-picker">
+      <div className="flex w-[340px] h-[800px] justify-center items-center custom-day-picker">
         <DayPicker
           mode="single"
           modifiers={modifiers}
@@ -94,7 +94,7 @@ function Calendar() {
           disabled={disabledDays}
         />
       </div>
-    </>
+    </div>
   );
 }
 

@@ -1,6 +1,7 @@
 import { ReactNode, useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
+import Navigationbar from './Navigationbar';
 
 type Props = {
   children?: ReactNode;
@@ -38,6 +39,8 @@ const HeaderLayout = ({ children }: Props) => {
 
   return (
     <section className="flex justify-between items-center my-2">
+      {/* <Button>...</Button> */}
+      <Navigationbar />
       <div>{children}</div>
       <div className="flex">
         <Button variant="link" className="bold" onClick={handleLogout}>

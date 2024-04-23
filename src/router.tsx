@@ -3,6 +3,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import App from './App.tsx';
 import GoogleCallback from './auth/GoogleCallback.tsx';
 import PrivateRoute from './auth/PrivateRoute.tsx';
+import Mypage from './components/Mypage.tsx';
 
 const ErrorPage = lazy(() => import('@/errorPage.tsx'));
 const Calendar = lazy(() => import('@/components/Calendar.tsx'));
@@ -22,7 +23,7 @@ export const router = createBrowserRouter([
   {
     path: '/calendar',
     element: (
-      <PrivateRoute fallback="...">
+      <PrivateRoute>
         <Calendar />
       </PrivateRoute>
     ),
@@ -30,7 +31,7 @@ export const router = createBrowserRouter([
   {
     path: '/diary',
     element: (
-      <PrivateRoute fallback="...">
+      <PrivateRoute>
         <Diary />
       </PrivateRoute>
     ),
@@ -38,7 +39,7 @@ export const router = createBrowserRouter([
   {
     path: '/diaryList',
     element: (
-      <PrivateRoute fallback="...">
+      <PrivateRoute>
         <DiaryList />
       </PrivateRoute>
     ),
@@ -46,8 +47,16 @@ export const router = createBrowserRouter([
   {
     path: '/api/auth/google/callback',
     element: (
-      <Suspense fallback="...">
+      <Suspense>
         <GoogleCallback />
+      </Suspense>
+    ),
+  },
+  {
+    path: '/mypage',
+    element: (
+      <Suspense>
+        <Mypage />
       </Suspense>
     ),
   },
