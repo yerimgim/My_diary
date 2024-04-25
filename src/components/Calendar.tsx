@@ -83,7 +83,7 @@ function Calendar() {
   }, [selectedDay, selectedDayDataExists, navigate, year, month, formattedDate, date, day]);
 
   return (
-    <div className="bg-slate-100">
+    <div>
       <HeaderLayout />
       <div className="flex w-[340px] h-[800px] justify-center items-center custom-day-picker">
         <DayPicker

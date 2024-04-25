@@ -69,7 +69,14 @@ const Mypage = () => {
     <div className="w-[340px] h-[800px]">
       <HeaderLayout />
       <section className="my-5">
-        <h3 className="font-jalnan text-sm mb-3">내 정보</h3>
+        <h3
+          className="font-jalnan text-sm mb-3 inline-block"
+          style={{
+            background: 'linear-gradient(to top, #FFF7C2 30%, transparent 10%)',
+          }}
+        >
+          내 정보
+        </h3>
         <div className="flex items-center">
           <Button className="w-10 h-10 bg-slate-300 flex justify-center  rounded-full text-xs mr-5">
             {user ? user.username || user.displayName : ''}
@@ -88,7 +95,14 @@ const Mypage = () => {
       <Separator />
 
       <section className="my-3">
-        <h3 className="mb-3 font-jalnan text-sm">나의 기분 통계</h3>
+        <h3
+          className="mb-3 font-jalnan text-sm inline-block"
+          style={{
+            background: 'linear-gradient(to top, #FFF7C2 30%, transparent 10%)',
+          }}
+        >
+          나의 기분 통계
+        </h3>
         <div className="flex flex-col items-center">
           <AssetDoughnutChart labels={labels} emotionList={emotionList} colors={colors} />
           {diaryData && diaryData.length !== 0 && (
@@ -97,22 +111,46 @@ const Mypage = () => {
             </div>
           )}
 
-          <Button className="w-full" onClick={() => navigate('/myEmotionRecord')}>
+          <Button
+            className="w-full"
+            onClick={() => navigate('/myEmotionRecord', { state: { labels, emotionList, colors } })}
+          >
             자세히 보기
           </Button>
         </div>
       </section>
       <Separator />
       <section className="my-3">
-        <h3 className="font-jalnan text-sm mb-3">폰트</h3>
+        <h3
+          className="font-jalnan text-sm mb-3 inline-block"
+          style={{
+            background: 'linear-gradient(to top, #FFF7C2 30%, transparent 10%)',
+          }}
+        >
+          폰트
+        </h3>
       </section>
       <Separator />
       <section className="my-3">
-        <h3 className="font-jalnan text-sm mb-3">다크모드</h3>
+        <h3
+          className="font-jalnan text-sm mb-3 inline-block"
+          style={{
+            background: 'linear-gradient(to top, #FFF7C2 30%, transparent 10%)',
+          }}
+        >
+          다크모드
+        </h3>
       </section>
       <Separator />
       <section className="my-3">
-        <h3 className="font-jalnan text-sm mb-3">백업/복원</h3>
+        <h3
+          className="font-jalnan text-sm mb-3 inline-block"
+          style={{
+            background: 'linear-gradient(to top, #FFF7C2 30%, transparent 10%)',
+          }}
+        >
+          백업/복원
+        </h3>
       </section>
     </div>
   );

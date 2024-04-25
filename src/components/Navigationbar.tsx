@@ -39,6 +39,8 @@ import { useState } from 'react';
 import { MdOutlineMenu } from 'react-icons/md';
 import { Button } from './ui/button';
 import { Link } from 'react-router-dom';
+import { AiOutlineCalendar } from 'react-icons/ai';
+import { IoMdPeople } from 'react-icons/io';
 
 const Navigationbar = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -53,17 +55,19 @@ const Navigationbar = () => {
 
   return (
     <div className="relative">
-      <Button onClick={showMenu} variant="ghost">
+      <Button onClick={showMenu} variant="ghost" className="hover:bg-transparent">
         <MdOutlineMenu size={20} />
       </Button>
 
       {isVisible && (
         <div className="absolute z-[100] top-0 w-1/2 h-full">
-          <ul className="bg-slate-400 w-[280px] h-[848px] absolute z-[101]">
-            <li className="m-3">
+          <ul className="bg-slate-200 w-[280px] h-[848px] absolute z-[101]">
+            <li className="m-3 text-sm flex items-center">
+              <AiOutlineCalendar size={25} className="mr-2" />
               <Link to="/calendar">Calendar</Link>
             </li>
-            <li className="m-3">
+            <li className="m-3 text-sm flex items-center">
+              <IoMdPeople size={25} className="mr-2" />
               <Link to="/mypage">Mypage</Link>
             </li>
           </ul>
