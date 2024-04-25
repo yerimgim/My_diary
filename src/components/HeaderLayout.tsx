@@ -1,6 +1,5 @@
 import { ReactNode, useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { useNavigate } from 'react-router-dom';
 import Navigationbar from './Navigationbar';
 
 type Props = {
@@ -21,7 +20,6 @@ type UserType = {
 };
 
 const HeaderLayout = ({ children }: Props) => {
-  const navigate = useNavigate();
   const [user, setUser] = useState<UserType>();
 
   useEffect(() => {

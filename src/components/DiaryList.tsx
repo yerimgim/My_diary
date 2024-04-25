@@ -1,6 +1,5 @@
 import { Button } from '@/components/ui/button';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { AiOutlineLeft } from 'react-icons/ai';
 import useStore from '@/store/store';
 import useFetchDiaryData from '@/hooks/useFetchData';
 import { MdModeEdit, MdDelete } from 'react-icons/md';
@@ -27,11 +26,12 @@ type DeleteDiaryType = {
 const DiaryList = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
-  const handlePage = () => {
-    navigate('/calendar');
-  };
+
   useFetchDiaryData();
   const { diaryLoading, diaryData } = useStore((state) => state);
+  const handleEditDiary = (diaryid, diary) => {
+    navigate('/diary', { state: { diaryid, diary, isEdit: true } });
+  };
 
   const handleSelectedDiary = (diaryId: number) => {
     (useStore.getState() as DeleteDiaryType).deleteData(diaryId);
@@ -39,7 +39,6 @@ const DiaryList = () => {
 
   const [filteredData, setFilteredData] = useState([]);
 
-  // diaryData가 변경될 때마다 특정 연도와 월에 해당하는 데이터를 필터링합니다.
   useEffect(() => {
     const filtered = diaryData
       .filter(
@@ -47,7 +46,7 @@ const DiaryList = () => {
       )
       .sort((a, b) => b.attributes.day - a.attributes.day);
 
-    console.log(filtered);
+    // console.log(filtered);
 
     setFilteredData(filtered);
   }, [diaryData, state.year, state.month]);
@@ -56,9 +55,6 @@ const DiaryList = () => {
     <section className="relative">
       <HeaderLayout>
         <header className="flex items-center">
-          <Button onClick={handlePage} variant="ghost">
-            <AiOutlineLeft size={24} color="#000" />
-          </Button>
           <h3 className="font-jalnan text-center">
             {state.year}년 {state.month + 1}월
           </h3>
