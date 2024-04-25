@@ -7,6 +7,7 @@ import { Separator } from '@/components/ui/separator';
 import useStore from '@/store/store';
 import useFetchDiaryData from '@/hooks/useFetchData';
 import { useNavigate } from 'react-router-dom';
+import { AiOutlineQuestionCircle } from 'react-icons/ai';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -149,8 +150,15 @@ const Mypage = () => {
             background: 'linear-gradient(to top, #FFF7C2 30%, transparent 10%)',
           }}
         >
-          백업/복원
+          백업
         </h3>
+        <div>
+          <div className="text-xs text-[#8d8c8c] my-3 flex items-center">
+            <AiOutlineQuestionCircle className="mr-2" />
+            확인해주세요
+          </div>
+          <ExportCSVButton diaryData={diaryData} />
+        </div>
       </section>
     </div>
   );
@@ -205,3 +213,28 @@ export function AssetDoughnutChart({ labels, emotionList, colors }) {
     </main>
   );
 }
+
+const ExportCSVButton = ({ diaryData }) => {
+  const exportCSV = () => {
+    let csvContent = 'id,emotion,color\n';
+    diaryData.forEach((item) => {
+      csvContent += `${item.id},${item.attributes.emotion},${item.attributes.color}\n`;
+    });
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'diarydata.csv';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  return (
+    <Button className="w-full" onClick={exportCSV}>
+      CSV파일로 저장
+    </Button>
+  );
+};
