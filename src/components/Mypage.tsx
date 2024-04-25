@@ -73,8 +73,8 @@ const Mypage = () => {
             {user ? user.username || user.displayName : ''}
           </Button>
           <div className="font-dohyeon text-[12px]">
-            <div>{user?.username}</div>
-            <div className="text-[#333]">{user?.email}</div>
+            <div>{user?.username} 님</div>
+            <div className="text-[#5e5e5e]">{user?.email}</div>
           </div>
         </div>
         {diaryData && diaryData.length !== 0 && (
@@ -89,6 +89,12 @@ const Mypage = () => {
         <h3 className="mb-3 font-jalnan text-sm">나의 기분 통계</h3>
         <div className="flex flex-col items-center">
           <AssetDoughnutChart labels={labels} emotionList={emotionList} colors={colors} />
+          {diaryData && diaryData.length !== 0 && (
+            <div className="text-xs text-[#8d8c8c] m-3">
+              지금까지 <span className="font-jalnan">{diaryData.length}</span>번 기록하셨어요.
+            </div>
+          )}
+
           <Button className="w-full">자세히 보기</Button>
         </div>
       </section>
