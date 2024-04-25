@@ -153,10 +153,13 @@ const Mypage = () => {
           백업
         </h3>
         <div>
-          <div className="text-xs text-[#8d8c8c] my-3 flex items-center">
+          <p className="text-xs text-[#8d8c8c] my-1 flex items-center">
             <AiOutlineQuestionCircle className="mr-2" />
             확인해주세요
-          </div>
+          </p>
+          <p className="text-xs text-[#8d8c8c] mb-3">
+            작성한 일기를 CSV 파일로 저장할 수 있습니다!
+          </p>
           <ExportCSVButton diaryData={diaryData} />
         </div>
       </section>
