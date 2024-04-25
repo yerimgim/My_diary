@@ -31,7 +31,7 @@ const DiaryList = () => {
     navigate('/calendar');
   };
   useFetchDiaryData();
-  const { diaryLoading: boolean, diaryData } = useStore((state) => state);
+  const { diaryLoading, diaryData } = useStore((state) => state);
 
   const handleSelectedDiary = (diaryId: number) => {
     (useStore.getState() as DeleteDiaryType).deleteData(diaryId);
