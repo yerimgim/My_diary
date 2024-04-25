@@ -1,5 +1,5 @@
 const MyEmotionRecords = () => {
-  return <></>;
+  return <>myEmotionRecord</>;
 };
 
 export default MyEmotionRecords;

@@ -4,6 +4,7 @@ import App from './App.tsx';
 import GoogleCallback from './auth/GoogleCallback.tsx';
 import PrivateRoute from './auth/PrivateRoute.tsx';
 import Mypage from './components/Mypage.tsx';
+import MyEmotionRecords from './components/MyEmotionRecords.tsx';
 
 const ErrorPage = lazy(() => import('@/errorPage.tsx'));
 const Calendar = lazy(() => import('@/components/Calendar.tsx'));
@@ -57,6 +58,14 @@ export const router = createBrowserRouter([
     element: (
       <Suspense>
         <Mypage />
+      </Suspense>
+    ),
+  },
+  {
+    path: '/myEmotionRecord',
+    element: (
+      <Suspense>
+        <MyEmotionRecords />
       </Suspense>
     ),
   },

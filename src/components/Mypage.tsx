@@ -6,6 +6,7 @@ import { Doughnut } from 'react-chartjs-2';
 import { Separator } from '@/components/ui/separator';
 import useStore from '@/store/store';
 import useFetchDiaryData from '@/hooks/useFetchData';
+import { useNavigate } from 'react-router-dom';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -24,6 +25,7 @@ type UserType = {
 
 const Mypage = () => {
   const [user, setUser] = useState<UserType>();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const authUser = localStorage.getItem('user');
@@ -95,7 +97,9 @@ const Mypage = () => {
             </div>
           )}
 
-          <Button className="w-full">자세히 보기</Button>
+          <Button className="w-full" onClick={() => navigate('/myEmotionRecord')}>
+            자세히 보기
+          </Button>
         </div>
       </section>
       <Separator />
